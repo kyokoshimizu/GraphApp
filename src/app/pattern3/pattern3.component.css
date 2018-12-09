@@ -1,0 +1,26 @@
+.wrapper {
+    padding: 50px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #7b716c;
+}
+
+button {
+    height: 50px;
+    margin-bottom: 20px;
+    color: #7b716c;
+}
+
+.content > .average {
+    background: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    width: 400px;
+    margin: 5px 0;
+}
+
+.content > .average > span.label1 { color: rgb(168, 56, 93); }
+.content > .average > span.label2 { color: rgb(122, 163, 229);}
+.content > .average > span.label3 { color: rgb(162, 126, 168);}
+.content > .average > span.value { float: right; }

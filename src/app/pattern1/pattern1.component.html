@@ -1,0 +1,27 @@
+<div class="wrapper">
+  <div class="content">
+    <button mat-stroked-button (click)="onClick()"
+      [disabled]="!!inputData.length">
+      StartMeasuring!
+    </button>
+    <div class="average">
+      <span class="label1">PureJSAverage: </span>
+      <span class="value">{{pureJSAve}} (ms)</span>
+    </div>
+    <div class="average">
+      <span class="label2">LodashAverage: </span>
+      <span class="value">{{lodashAve}} (ms)</span>
+    </div>
+  </div>
+  <ngx-charts-line-chart
+    [view]="view"
+    [results]="inputData"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    xAxisLabel="times"
+    yAxisLabel="(ms)">
+  </ngx-charts-line-chart>
+</div>
