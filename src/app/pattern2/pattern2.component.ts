@@ -28,27 +28,27 @@ export class Pattern2Component implements OnInit {
       data2.push({ a: num });
     });
 
-    Array.from({ length: 50 }, (_, index) => {
+    Array.from({ length: 50 }, ({}, index) => {
       this.result1.push({ value: this.pureJS(data1), name: index });
       this.result2.push({ value: this.lodash(data2), name: index });
     });
 
     this.inputData = [ { name: 'PureJS', series: this.result1 }, { name: 'Lodash', series: this.result2 } ];
-    this.pureJSAve = _.sum(this.result1.map(o => { return o.value; })) / 50;
-    this.lodashAve = _.sum(this.result2.map(o => { return o.value; })) / 50;
+    this.pureJSAve = _.sum(this.result1.map(o => o.value)) / 50;
+    this.lodashAve = _.sum(this.result2.map(o => o.value)) / 50;
   }
 
   pureJS(data: { a: number }[]): number {
-    const start_ms = performance.now();
+    const startMs = performance.now();
     data.forEach(list => list.a *= 3);
-    data.sort((l1, l2) => { return (l1.a > l2.a) ? 1 : -1 });
-    return (performance.now() - start_ms);
+    data.sort((l1, l2) => (l1.a > l2.a) ? 1 : -1);
+    return (performance.now() - startMs);
   }
-  
+
   lodash(data: { a: number }[]): number {
-    const start_ms = performance.now();
+    const startMs = performance.now();
     _.chain(data).each(list => list.a *= 3)
       .sortBy('a').value();
-    return (performance.now() - start_ms);
+    return (performance.now() - startMs);
   }
 }

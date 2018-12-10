@@ -25,13 +25,13 @@ export class Pattern3Component implements OnInit {
     const data2: { b: number[] }[] = [];
     const data3: { b: number[] }[] = [];
 
-    Array.from({ length: 10000 }, (_) => {
+    Array.from({ length: 10000 }, () => {
       data1.push({ b: [1, 2, 3] });
       data2.push({ b: [1, 2, 3] });
       data3.push({ b: [1, 2, 3] });
     });
 
-    Array.from({ length: 10 }, (_, index) => {
+    Array.from({ length: 10 }, ({}, index) => {
       this.result1.push({ value: this.pureJS(data1), name: index });
       this.result2.push({ value: this.pureJS2(data1), name: index });
       this.result3.push({ value: this.lodash(data3), name: index });
@@ -42,28 +42,28 @@ export class Pattern3Component implements OnInit {
       { name: 'PureJS2', series: this.result2 },
       { name: 'Lodash', series: this.result3 },
     ];
-    this.pureJSAve = _.sum(this.result1.map(o => { return o.value; })) / 10;
-    this.pureJSAve2 = _.sum(this.result2.map(o => { return o.value; })) / 10;
-    this.lodashAve = _.sum(this.result3.map(o => { return o.value; })) / 10;
+    this.pureJSAve = _.sum(this.result1.map(o => o.value)) / 10;
+    this.pureJSAve2 = _.sum(this.result2.map(o => o.value)) / 10;
+    this.lodashAve = _.sum(this.result3.map(o => o.value)) / 10;
   }
 
   pureJS(data: { b: number[] }[]) {
-    const start_ms = performance.now();
-    data.map((o) => { return o.b })
+    const startMs = performance.now();
+    data.map((o) => o.b)
       .reduce((a, b) => a.concat(b), []);
-    return (performance.now() - start_ms);
+    return (performance.now() - startMs);
   }
 
   pureJS2 = (data: { b: number[] }[]) => {
-    const start_ms = performance.now();
-    ([] as number[]).concat(...data.map((o) => { return o.b }));
-    return (performance.now() - start_ms);
+    const startMs = performance.now();
+    ([] as number[]).concat(...data.map((o) => o.b));
+    return (performance.now() - startMs);
   }
-  
+
   lodash(data: { b: number[] }[]) {
-    const start_ms = performance.now();
+    const startMs = performance.now();
     _.chain(data).map('b')
       .flatten().value();
-    return (performance.now() - start_ms);
+    return (performance.now() - startMs);
   }
 }

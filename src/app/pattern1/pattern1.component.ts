@@ -43,9 +43,9 @@ export class Pattern1Component {
   }
 
   measur(data1, data2): GraphInterface[] {
-    let result1: SeriesInterface[] = [];
-    let result2: SeriesInterface[] = [];
-    Array.from({ length: this.roopCount }, (_, index) => {
+    const result1: SeriesInterface[] = [];
+    const result2: SeriesInterface[] = [];
+    Array.from({ length: this.roopCount }, ({}, index) => {
       result1.push({ value: this.pureJS(data1), name: index });
       result2.push({ value: this.lodash(data2), name: index });
     });
@@ -54,22 +54,22 @@ export class Pattern1Component {
   }
 
   calcAverage(result: SeriesInterface[]): number {
-    return _.sum(result.map(o => { return o.value; })) / this.roopCount;
+    return _.sum(result.map(o => o.value)) / this.roopCount;
   }
 
   pureJS(data: InitialDataInterface[]): number {
-    const start_ms = performance.now();
+    const startMs = performance.now();
     let sum = 0;
-    data.map(o => { return o.a })
+    data.map(o => o.a)
       .filter(a => a % 2)
       .forEach(n => sum += n);
-    return (performance.now() - start_ms);
+    return performance.now() - startMs;
   }
 
   lodash(data: InitialDataInterface[]): number {
-    const start_ms = performance.now();
+    const startMs = performance.now();
     _.chain(data).map('a')
       .filter(a => a % 2).sum().value();
-    return (performance.now() - start_ms);
+    return performance.now() - startMs;
   }
 }
