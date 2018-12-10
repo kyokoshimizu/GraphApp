@@ -23,8 +23,7 @@ export class Pattern1Component {
   view = [750, 450];
   roopCount = 50;
   inputData: GraphInterface[] = [];
-  pureJSAve: number;
-  lodashAve: number;
+  displayData: { label: string, average: number, class: string }[] = [];
 
   constructor() {}
 
@@ -38,8 +37,14 @@ export class Pattern1Component {
     });
 
     this.inputData = this.measur(data1, data2);
-    this.pureJSAve = this.calcAverage(this.inputData[0].series);
-    this.lodashAve = this.calcAverage(this.inputData[1].series);
+    this.inputData.forEach((item, i) => {
+      this.displayData.push({
+        label: `${item.name}Average: `,
+        average: this.calcAverage(item.series),
+        class: `label${i + 1}`,
+      });
+    });
+
   }
 
   measur(data1, data2): GraphInterface[] {

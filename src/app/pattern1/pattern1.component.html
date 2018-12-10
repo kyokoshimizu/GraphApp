@@ -4,14 +4,12 @@
       [disabled]="!!inputData.length">
       StartMeasuring!
     </button>
-    <div class="average">
-      <span class="label1">PureJSAverage: </span>
-      <span class="value">{{pureJSAve}} (ms)</span>
-    </div>
-    <div class="average">
-      <span class="label2">LodashAverage: </span>
-      <span class="value">{{lodashAve}} (ms)</span>
-    </div>
+    <ng-container *ngFor="let item of displayData">
+      <div class="average">
+        <span class="{{item.class}}">{{item.label}}</span>
+        <span class="value">{{item.average}} (ms)</span>
+      </div>
+    </ng-container>
   </div>
   <ngx-charts-line-chart
     [view]="view"
