@@ -5,10 +5,6 @@ interface SeriesInterface {
   value: number;
   name: number;
 }
-interface GraphInterface {
-  name: 'PureJS' | 'Lodash';
-  series: SeriesInterface[];
-}
 interface InitialDataInterface {
   a: number;
 }
@@ -22,7 +18,7 @@ interface InitialDataInterface {
 export class Pattern1Component {
   view = [750, 450];
   roopCount = 50;
-  inputData: GraphInterface[] = [];
+  inputData: { name: 'PureJS' | 'Lodash', series: SeriesInterface[] }[] = [];
   displayData: { label: string, average: number, class: string }[] = [];
 
   constructor() {}
@@ -36,7 +32,14 @@ export class Pattern1Component {
       data2.push({ a: num });
     });
 
-    this.inputData = this.measur(data1, data2);
+    const result1: SeriesInterface[] = [];
+    const result2: SeriesInterface[] = [];
+    Array.from({ length: this.roopCount }, ({}, index) => {
+      result1.push({ value: this.pureJS(data1), name: index });
+      result2.push({ value: this.lodash(data2), name: index });
+    });
+
+    this.inputData = [ { name: 'PureJS', series: result1 }, { name: 'Lodash', series: result2 } ];
     this.inputData.forEach((item, i) => {
       this.displayData.push({
         label: `${item.name}Average: `,
@@ -45,17 +48,6 @@ export class Pattern1Component {
       });
     });
 
-  }
-
-  measur(data1, data2): GraphInterface[] {
-    const result1: SeriesInterface[] = [];
-    const result2: SeriesInterface[] = [];
-    Array.from({ length: this.roopCount }, ({}, index) => {
-      result1.push({ value: this.pureJS(data1), name: index });
-      result2.push({ value: this.lodash(data2), name: index });
-    });
-
-    return [ { name: 'PureJS', series: result1 }, { name: 'Lodash', series: result2 } ];
   }
 
   calcAverage(result: SeriesInterface[]): number {
